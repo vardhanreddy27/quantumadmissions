@@ -2,8 +2,8 @@ import React from "react";
 
 export default function StudentsTable({ students }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white border border-gray-200 rounded-lg">
+    <div className="overflow-x-auto w-full">
+      <table className="min-w-full bg-white border border-gray-200 rounded-lg text-xs md:text-sm">
         <thead>
           <tr className="bg-[#8B1F1F] text-white">
             <th className="py-2 px-4 text-center">ID</th>

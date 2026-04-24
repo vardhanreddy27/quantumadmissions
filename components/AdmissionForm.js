@@ -60,8 +60,8 @@ export default function AdmissionForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="mx-auto bg-white shadow-xl rounded-2xl p-6 space-y-8 max-w-5xl">
+    <div className="min-h-screen ">
+      <div className="mx-auto bg-white   p-6 space-y-8 max-w-5xl">
 
         <h1 className="text-2xl font-bold text-center">
           Quantum Heights Admission Form
@@ -149,13 +149,26 @@ export default function AdmissionForm() {
         </Section>
 
         {/* SUBMIT */}
+        {/* Desktop/Tablet: normal button, Mobile: fixed at bottom */}
+        <div className="block md:hidden h-16" /> {/* Spacer for mobile fixed button */}
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition"
+          className="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition hidden md:block"
         >
           {loading ? "Submitting..." : "Submit Application"}
         </button>
+        {/* Fixed button for mobile */}
+        <div className="md:hidden">
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="fixed bottom-0 left-0 w-full bg-black text-white py-4 rounded-none shadow-2xl z-40 text-lg"
+            style={{borderRadius: 0}}
+          >
+            {loading ? "Submitting..." : "Submit Application"}
+          </button>
+        </div>
 
       </div>
     </div>
@@ -170,7 +183,7 @@ function Section({ title, children }) {
       <h2 className="mb-4 border-b pb-2 bg-[#711d18] text-white text-center text-lg font-semibold rounded-t-lg px-4 py-3">
         {title}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {children}
       </div>
     </div>
