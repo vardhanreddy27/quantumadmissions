@@ -24,10 +24,9 @@ export default function AdmissionModal({ admissionId, onClose }) {
     if (!admissionId) return;
 
     let active = true;
-    setLoading(true);
-    setError("");
-
-    (async () => {
+    const timer = setTimeout(async () => {
+      setLoading(true);
+      setError("");
       try {
         const res = await fetch(`/api/admission/${admissionId}`);
         const data = await res.json();
@@ -40,9 +39,12 @@ export default function AdmissionModal({ admissionId, onClose }) {
       } finally {
         if (active) setLoading(false);
       }
-    })();
+    }, 0);
 
-    return () => (active = false);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
   }, [admissionId]);
 
   if (!admissionId) return null;

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import Swal from "sweetalert2";
 
 const ADMISSION_CONFIRMATION_FEE = 2000;
@@ -1014,10 +1015,13 @@ function ReceiptCopy({
         
 
           <div>
-           <img
-            src="/logo.jpeg"
-            alt="School Logo"
-className="receipt-logo h-28 w-[420px] object-contain"          />
+            <Image
+              src="/logo.jpeg"
+              alt="School Logo"
+              width={2332}
+              height={527}
+              className="receipt-logo h-28 w-[420px] object-contain"
+            />
           </div>
         </div>
 

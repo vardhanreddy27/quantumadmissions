@@ -261,7 +261,8 @@ export default function PayrollPage() {
   }
 
   useEffect(() => {
-    fetchData();
+    const timer = setTimeout(fetchData, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   function openAdd() {

@@ -274,17 +274,6 @@ function QuantityAdjustModal({ open, asset, onClose, onSubmit, submitting }) {
     notes: "",
   });
 
-  useEffect(() => {
-    if (open) {
-      setForm({
-        date: getToday(),
-        reason: "Issued / Given",
-        quantity_to_reduce: 1,
-        notes: "",
-      });
-    }
-  }, [open]);
-
   if (!open || !asset) return null;
 
   const currentQty = Number(asset.quantity || 0);
@@ -490,19 +479,6 @@ function MaintenanceModal({ open, asset, onClose, onSubmit, submitting }) {
     issue_reported: "",
     notes: "",
   });
-
-  useEffect(() => {
-    if (open) {
-      setForm({
-        service_date: getToday(),
-        service_type: "Repair",
-        vendor_name: "",
-        repair_cost: "",
-        issue_reported: "",
-        notes: "",
-      });
-    }
-  }, [open]);
 
   if (!open || !asset) return null;
 
@@ -1238,21 +1214,25 @@ export default function AssetsPage() {
         submitting={submitting}
       />
 
-      <QuantityAdjustModal
-        open={quantityModalOpen}
-        asset={selectedAsset}
-        onClose={closeQuantityModal}
-        onSubmit={saveQuantityAdjustment}
-        submitting={submittingAdjustment}
-      />
+      {quantityModalOpen && (
+        <QuantityAdjustModal
+          open
+          asset={selectedAsset}
+          onClose={closeQuantityModal}
+          onSubmit={saveQuantityAdjustment}
+          submitting={submittingAdjustment}
+        />
+      )}
 
-      <MaintenanceModal
-        open={maintenanceModalOpen}
-        asset={selectedAsset}
-        onClose={closeMaintenanceModal}
-        onSubmit={saveMaintenance}
-        submitting={submittingMaintenance}
-      />
+      {maintenanceModalOpen && (
+        <MaintenanceModal
+          open
+          asset={selectedAsset}
+          onClose={closeMaintenanceModal}
+          onSubmit={saveMaintenance}
+          submitting={submittingMaintenance}
+        />
+      )}
     </div>
   );
 }

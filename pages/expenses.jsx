@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import {
   FaReceipt,
   FaPlus,
@@ -35,10 +36,6 @@ function formatCurrency(value) {
     currency: "INR",
     maximumFractionDigits: 0,
   }).format(Number(value) || 0);
-}
-
-function getFileIcon(fileName = "") {
-  return fileName.toLowerCase().endsWith(".pdf") ? FaFilePdf : FaImage;
 }
 
 export default function ExpensesPage() {
@@ -85,6 +82,7 @@ export default function ExpensesPage() {
       }
 
       setExpenses(data.expenses || []);
+      setExpensePage(1);
     } catch (fetchError) {
       setError(fetchError.message || "Unable to load expenses");
     } finally {
@@ -93,14 +91,9 @@ export default function ExpensesPage() {
   }
 
   useEffect(() => {
-    fetchExpenses();
+    const timer = setTimeout(fetchExpenses, 0);
+    return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    if (expensePage > expenseTotalPages) {
-      setExpensePage(1);
-    }
-  }, [expensePage, expenseTotalPages]);
 
   useEffect(() => {
     return () => {
@@ -357,9 +350,12 @@ export default function ExpensesPage() {
                   </div>
 
                   {scanPreview && (
-                    <img
+                    <Image
                       src={scanPreview}
                       alt="Receipt preview"
+                      width={800}
+                      height={600}
+                      unoptimized
                       className="mt-4 max-h-64 w-full rounded-2xl object-contain bg-slate-50"
                     />
                   )}
@@ -522,11 +518,11 @@ export default function ExpensesPage() {
 }
 
 function FileIcon({ fileName }) {
-  const Icon = getFileIcon(fileName);
+  const isPdf = fileName.toLowerCase().endsWith(".pdf");
 
   return (
     <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-white text-[#08516d] shadow-sm">
-      <Icon />
+      {isPdf ? <FaFilePdf /> : <FaImage />}
     </div>
   );
 }

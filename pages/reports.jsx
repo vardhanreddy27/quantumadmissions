@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { withAuthPage } from "@/lib/withAuthPage";
 import {
   formatCurrency,
@@ -208,7 +208,7 @@ export default function ReportsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function fetchReports() {
+  const fetchReports = useCallback(async () => {
     try {
       setLoading(true);
       setError("");
@@ -227,11 +227,12 @@ export default function ReportsPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [month]);
 
   useEffect(() => {
-    fetchReports();
-  }, [month]);
+    const timer = setTimeout(fetchReports, 0);
+    return () => clearTimeout(timer);
+  }, [fetchReports]);
 
   const collectionPercent = data.totalFees
     ? (Number(data.totalCollected || 0) / Number(data.totalFees || 1)) * 100

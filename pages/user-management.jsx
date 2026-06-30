@@ -157,7 +157,8 @@ export default function UserManagementPage() {
   }
 
   useEffect(() => {
-    fetchUsers();
+    const timer = setTimeout(fetchUsers, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const filteredUsers = useMemo(() => {

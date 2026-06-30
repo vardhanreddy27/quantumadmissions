@@ -392,7 +392,8 @@ export default function StaffPage() {
   }
 
   useEffect(() => {
-    fetchStaff();
+    const timer = setTimeout(fetchStaff, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const filteredStaff = useMemo(() => {

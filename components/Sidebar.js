@@ -67,7 +67,7 @@ export default function Sidebar({ user }) {
       >
         <div className="flex flex-col items-center mb-10">
           <Image
-            src="/s.jpg"
+            src="/logo.jpg"
             alt="Logo"
             width={80}
             height={80}
